@@ -36,5 +36,11 @@
       ],
       "matches": []
     }
+  ],
+  "side_panel": {
+    "default_path": "panel.html"
+  },
+  "permissions": [
+    "sidePanel"
   ]
 }
