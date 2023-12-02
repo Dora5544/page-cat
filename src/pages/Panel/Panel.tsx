@@ -4,7 +4,10 @@ import './Panel.css';
 const Panel: React.FC = () => {
   const [pageTitle, setPageTitle] = useState('...');
 
+  console.log("before useEffect")
+
   useEffect(() => {
+    console.log("in useEffect")
     // 定义消息监听器
     const messageListener = (message: any) => {
       if (message.type === 'page-information') {
@@ -17,6 +20,16 @@ const Panel: React.FC = () => {
     // 添加消息监听器
     chrome.runtime.onMessage.addListener(messageListener);
 
+    // sidepanel.js
+
+    // 发送消息到用户标签页
+    chrome.tabs.query({ active:true, currentWindow: true }, function (tabs) {
+      const activeTab = tabs[0];
+      chrome.tabs.sendMessage(Number(activeTab.id), { type: 'messageFromSidePanel', data: 'Hello from Side Panel!' });
+    });
+
+
+    console.log("panel send")
     // 在组件卸载时移除消息监听器
     return () => {
       chrome.runtime.onMessage.removeListener(messageListener);
