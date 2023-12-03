@@ -1,35 +1,48 @@
-import { OpenAIClient, AzureKeyCredential } from "@azure/openai";
+import { OpenAIClient, AzureKeyCredential, ChatMessage } from "@azure/openai";
 
+export class ChatService {
 
-export const test = async () => {
-    console.log('invoke test')
-    const client = new OpenAIClient(
-        "https://voice-ai.openai.azure.com/",
-        new AzureKeyCredential("b2d46d00666048f592e2a2dcc13dca55")
-    );
-    const deploymentId = "gpt-4";
+    private readonly url = "https://voice-ai.openai.azure.com/";
 
-    const messages = [
-        { role: "system", content: "You are a helpful assistant." },
-        { role: "user", content: "Hello, do you know ipv4?" }
-    ];
+    private readonly deploymentId = "gpt-4";
 
-    console.log(`Messages: ${messages}`);
+    private readonly key = "b2d46d00666048f592e2a2dcc13dca55";
 
-    const { choices } = await client.getChatCompletions(deploymentId, messages);
+    private readonly chatHistory: ChatMessage[] = [];
 
-    for (const choice of choices) {
-        console.log(choice.message);
+    private readonly client;
+
+    constructor(prompt?: string) {
+
+        if (!prompt) {
+            prompt = "You are a helpful assistant.";
+        }
+        this.chatHistory.push({
+            role: "system",
+            content: prompt
+        });
+
+        this.client = new OpenAIClient(this.url, new AzureKeyCredential(this.key));
     }
-    // for await (const event of events) {
-    //     console.log('this is a new event')
-    //     for (const choice of event.choices) {
-    //         console.log('this is a new choice')
-    //         console.log('this is message', choice.message)
-    //         const delta = choice.delta?.content;
-    //         if (delta !== undefined) {
-    //             console.log(`Chatbot: ${delta}`);
-    //         }
-    //     }
-    // }
+
+    public async chat(message: string) {
+
+        this.chatHistory.push({
+            role: "user",
+            content: message
+        });
+
+        const { choices } = await this.client.getChatCompletions(this.deploymentId, this.chatHistory);
+
+        const result = choices[0]?.message?.content || 'No message received from openai';
+
+        this.chatHistory.push({
+            role: "assistant",
+            content: result
+        });
+
+        return result;
+    }
 }
+
+export const chatService = new ChatService();

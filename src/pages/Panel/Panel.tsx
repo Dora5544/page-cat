@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Panel.css';
-import { test } from '../../services/openai'
+import { chatService } from '../../services/openai'
 
 const Panel: React.FC = () => {
   const [pageTitle, setPageTitle] = useState('...');
@@ -22,11 +22,10 @@ const Panel: React.FC = () => {
     chrome.runtime.onMessage.addListener(messageListener);
 
     // 发送消息到用户标签页
-    chrome.tabs.query({ active:true, currentWindow: true }, function (tabs) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       const activeTab = tabs[0];
       chrome.tabs.sendMessage(Number(activeTab.id), { type: 'messageFromSidePanel', data: 'Hello from Side Panel!' });
     });
-
 
     console.log("panel send")
     // 在组件卸载时移除消息监听器
@@ -37,9 +36,11 @@ const Panel: React.FC = () => {
 
   const click = () => {
     console.log('hello')
-    test().catch((err) => {
-      console.error("The sample encountered an error:", err);
-    });
+
+    chatService.chat("Do you know ipv4?")
+      .then(result => console.log(result)).catch((err) => {
+        console.error("The sample encountered an error:", err);
+      });
   }
 
   return (
