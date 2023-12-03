@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Panel.css';
 import { chatService } from '../../services/openai'
+import {Chat} from "./Chat"
 
 const Panel: React.FC = () => {
   const [pageTitle, setPageTitle] = useState('...');
@@ -48,6 +49,7 @@ const Panel: React.FC = () => {
       <h1>You are visiting {pageTitle}</h1>
       {/* <Button> test </Button> */}
       <button type="button" onClick={click}>Click Me</button>
+      <Chat></Chat>
     </div>
   );
 };
