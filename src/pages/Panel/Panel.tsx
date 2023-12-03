@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './Panel.css';
-import { chatService } from '../../services/openai'
 import { Chat } from "./Chat"
 
 const Panel: React.FC = () => {
@@ -36,11 +35,12 @@ const Panel: React.FC = () => {
   }, []); // 注意: 空数组表示只在组件挂载和卸载时执行
 
 
-
   return (
     <div>
-      <h1>You are visiting {pageTitle}</h1>
-      <Chat></Chat>
+      <div style={{ height: '80vh', overflowY: 'auto' }}>
+        <h1>You are visiting {pageTitle}</h1>
+        <Chat></Chat>
+      </div>
     </div>
   );
 };

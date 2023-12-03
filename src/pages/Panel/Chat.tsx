@@ -5,12 +5,10 @@ import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import SendIcon from '@mui/icons-material/Send';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { chatService } from '../../services/openai'
-
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
@@ -18,9 +16,9 @@ import Typography from '@mui/material/Typography';
 import { ChatMessage } from '@azure/openai';
 
 
+
 export function Chat() {
     const [inputValue, setInputValue] = useState(''); // State to hold the input value
-    const [response, setResponse] = useState('');     //State to hold the chat response
     const [chatList, setChatList] = useState<ChatMessage[]>([]);
 
     const handleInputChange = (e: any) => {
@@ -28,52 +26,56 @@ export function Chat() {
     }
 
     const send = () => {
-
+        //copy the latest chatList
         const historyChatList = [...chatList];
-        historyChatList.push({
-            role: 'user',
-            content: inputValue
-        });
-
-        setChatList(historyChatList);
+        setChatList([
+            ...historyChatList,
+            {
+                role: 'user',
+                content: inputValue
+            }
+        ]);
 
         chatService.chat(inputValue)
             .then(result => {
-                setResponse(result[-1].content || '');
-
+                setChatList(result);
             }).catch((err) => {
                 console.error("The sample encountered an error:", err);
             });
+        setInputValue("");
     }
 
     const handleEnterPress = (e: any) => {
         // handle enter press
         if (e.key === 'Enter') {
-          // send message inputValue
-          send();
-          console.log('press enter and send message:', inputValue);
+            // send message inputValue
+            send();
+            console.log('press enter and send message:', inputValue);
         }
-      };
+    };
 
     return (
         <div>
             <List>
                 {
-                    chatList.map(each => <ChatItem role={each.role} content={each.content}></ChatItem>)
+                    chatList.filter((each) => each.role !== 'system').map((each, index) => <ChatItem key={index} role={each.role} content={each.content}></ChatItem>)
                 }
             </List>
-            <TextField
-                label="Please input your question"
-                sx={{ m: 1, width: '96%', position: 'fixed', bottom: 0, left: 0 }}
-                onChange={handleInputChange}
-                onKeyDown={handleEnterPress}
-                InputProps={{
-                    endAdornment: <InputAdornment position="end"> <IconButton type="button" aria-label="send" onClick={() => send()}>
-                        <SendIcon />
-                    </IconButton></InputAdornment>
-                }}
 
-            />
+            <div style={{ backgroundColor: 'white', position: 'fixed', bottom: 0, left: 0, width: '100%' }}>
+                <TextField
+                    label="Please input your question"
+                    sx={{ m: 1, width: '96%' }}
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    onKeyDown={handleEnterPress}
+                    InputProps={{
+                        endAdornment: <InputAdornment position="end"> <IconButton type="button" aria-label="send" onClick={() => send()}>
+                            <SendIcon />
+                        </IconButton></InputAdornment>
+                    }}
+                />
+            </div>
         </div>
 
     );
@@ -86,7 +88,7 @@ function ChatItem(chatMessage: ChatMessage) {
             <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
         </ListItemAvatar>
         <ListItemText
-            primary="Brunch this weekend?"
+            primary={chatMessage.role}
             secondary={
                 <React.Fragment>
                     <Typography
@@ -95,9 +97,9 @@ function ChatItem(chatMessage: ChatMessage) {
                         variant="body2"
                         color="text.primary"
                     >
-                        Ali Connors
+                        {chatMessage.content}
                     </Typography>
-                    {" — I'll be in your neighborhood doing errands this…"}
+
                 </React.Fragment>
             }
         />
