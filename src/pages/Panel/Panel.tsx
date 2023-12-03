@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Panel.css';
 import { test } from '../../services/openai'
+import {Chat} from "./Chat"
 
 const Panel: React.FC = () => {
   const [pageTitle, setPageTitle] = useState('...');
@@ -22,7 +23,7 @@ const Panel: React.FC = () => {
     chrome.runtime.onMessage.addListener(messageListener);
 
     // 发送消息到用户标签页
-    chrome.tabs.query({ active:true, currentWindow: true }, function (tabs) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       const activeTab = tabs[0];
       chrome.tabs.sendMessage(Number(activeTab.id), { type: 'messageFromSidePanel', data: 'Hello from Side Panel!' });
     });
@@ -47,6 +48,7 @@ const Panel: React.FC = () => {
       <h1>You are visiting {pageTitle}</h1>
       {/* <Button> test </Button> */}
       <button type="button" onClick={click}>Click Me</button>
+      <Chat></Chat>
     </div>
   );
 };
