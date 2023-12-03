@@ -41,7 +41,7 @@ export class ChatService {
             content: result
         });
 
-        return result;
+        return [...this.chatHistory];
     }
 }
 
