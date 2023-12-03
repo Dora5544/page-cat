@@ -27,6 +27,15 @@ export function Chat() {
             });
     }
 
+    const handleEnterPress = (e: any) => {
+        // handle enter press
+        if (e.key === 'Enter') {
+          // send message inputValue
+          send();
+          console.log('press enter and send message:', inputValue);
+        }
+      };
+
     return (
         <div>
             <p> Answer: {response}</p>
@@ -34,6 +43,7 @@ export function Chat() {
                 label="Please input your question"
                 sx={{ m: 1, width: '96%', position: 'fixed', bottom: 0, left: 0 }}
                 onChange={handleInputChange}
+                onKeyDown={handleEnterPress}
                 InputProps={{
                     endAdornment: <InputAdornment position="end"> <IconButton type="button" aria-label="send" onClick={() => send()}>
                         <SendIcon />
