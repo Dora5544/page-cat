@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Panel.css';
 import { chatService } from '../../services/openai'
-import {Chat} from "./Chat"
+import { Chat } from "./Chat"
 
 const Panel: React.FC = () => {
   const [pageTitle, setPageTitle] = useState('...');
@@ -35,20 +35,11 @@ const Panel: React.FC = () => {
     };
   }, []); // 注意: 空数组表示只在组件挂载和卸载时执行
 
-  const click = () => {
-    console.log('hello')
 
-    chatService.chat("Do you know ipv4?")
-      .then(result => console.log(result)).catch((err) => {
-        console.error("The sample encountered an error:", err);
-      });
-  }
 
   return (
     <div>
       <h1>You are visiting {pageTitle}</h1>
-      {/* <Button> test </Button> */}
-      <button type="button" onClick={click}>Click Me</button>
       <Chat></Chat>
     </div>
   );
