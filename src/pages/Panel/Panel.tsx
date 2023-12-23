@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { useActiveTabChange } from '../../hooks/browser-listener-hook';
+import { useActivePageChange } from '../../hooks/use-active-page-change-hook';
 import './Panel.css';
 
 const Panel: React.FC = () => {
 
-  const page = useActiveTabChange();
+  const page = useActivePageChange();
 
   useEffect(() => {
     console.log('here', page)

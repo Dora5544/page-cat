@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { Page, chromeExtension } from '../services/browser-extension';
+import { Page, chromeExtension } from '../services/chrome-extension';
 
-export function useActiveTabChange() {
+export function useActivePageChange() {
     const [page, setPage] = useState<Page | null>();
 
     const pageChangeListenerId = useRef<number>();
