@@ -42,6 +42,8 @@
   },
   "permissions": [
     "sidePanel",
-    "webNavigation"
+    "webNavigation",
+    "activeTab",
+    "tabs"
   ]
 }
