@@ -14,7 +14,9 @@ export function useActiveTabChange() {
         pageChangeListenerId.current = chromeExtension.addActivePageChangeListener(pageChangeListener);
 
         return () => {
-            chromeExtension.removeActivePageChangeListener(pageChangeListenerId.current);
+            if (pageChangeListenerId.current !== undefined) {
+                chromeExtension.removeActivePageChangeListener(pageChangeListenerId.current);
+            }
         };
     }, []);
 
