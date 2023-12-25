@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useActivePageChange } from '../../hooks/use-active-page-change-hook';
 import './Panel.css';
+import { Chat } from './Chat';
 
 const Panel: React.FC = () => {
 
@@ -14,7 +15,7 @@ const Panel: React.FC = () => {
     <div>
       <div style={{ height: '80vh', overflowY: 'auto' }}>
         <h1>You are visiting {page?.title}</h1>
-        {/* <Chat></Chat> */}
+        <Chat></Chat>
       </div>
     </div>
   );
