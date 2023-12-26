@@ -9,8 +9,6 @@ var webpack = require('webpack'),
   config = require('../webpack.config'),
   ZipPlugin = require('zip-webpack-plugin');
 
-delete config.chromeExtensionBoilerplate;
-
 config.mode = 'production';
 
 var packageInfo = JSON.parse(fs.readFileSync('package.json', 'utf-8'));

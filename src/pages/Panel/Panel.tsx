@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
+import { useActivePageChange } from '../../hooks/use-active-page-change-hook';
 import './Panel.css';
-import { Chat } from "./Chat"
+import { Chat } from './Chat';
 
 const Panel: React.FC = () => {
 
   const [pageTitle, setPageTitle] = useState('...');
 
-  console.log("before useEffect")
 
   useEffect(() => {
 
