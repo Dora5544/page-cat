@@ -1,2 +1,8 @@
-console.log('This is the background page.');
-console.log('Put the background scripts here.');
+console.log(new Date(), 'This is the background page.');
+console.log(new Date(), 'Put the background scripts here.');
+
+
+
+
+
+  

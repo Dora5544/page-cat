@@ -1,19 +1,13 @@
 console.log('content script loaded.');
 
+// chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+//     if (message.action === 'pageIsActive') {
+//         // 处理标签激活事件
+//         console.log('Page activated');
+//         chrome.runtime.sendMessage({ type: 'page-information', data: document.title })
 
-// 监听来自 Side Panel 的消息
-chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    console.log("receive message")
-    if (message.type === 'messageFromSidePanel') {
-      console.log('Received message in Content Script:', message.data);
-      // 处理消息，可以执行需要的操作
-      chrome.runtime.sendMessage({ type: 'page-information', content: document.title });
-    }
-  });
-  
-
-
-console.log('sen done')
+//     }
+// });
 
 
 
