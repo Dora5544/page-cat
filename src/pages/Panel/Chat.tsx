@@ -1,5 +1,6 @@
 "use client"
 
+
 import { ChatMessage } from '@azure/openai';
 import SendIcon from '@mui/icons-material/Send';
 import Avatar from '@mui/material/Avatar';
@@ -11,13 +12,14 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Markdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import rehypeKatex from 'rehype-katex';
-import remarkMath from 'remark-math';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+
 
 
 export function Chat() {
@@ -27,6 +29,7 @@ export function Chat() {
     const [sendingMessage, setSendingMessage] = useState(false)
     const inputRef = useRef<HTMLInputElement>(null);
 
+
     //call when chatList is changed
     useEffect(() => {
         if (inputRef.current) {
@@ -34,6 +37,7 @@ export function Chat() {
             inputRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
         }
     }, [chatList]);
+
 
     const handleInputChange = (e: any) => {
         setInputValue(e.target.value);
@@ -63,14 +67,16 @@ export function Chat() {
                 Data: inputValue
             };
 
-            fetch(' https://chat-dog.azurewebsites.net/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(message)
-
-            })
+            fetch('https://chat-dog.azurewebsites.net/chat',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "X-ZUMO-AUTH": localStorage.getItem("accessToken") || "",
+                    },
+                    body: JSON.stringify(message)
+                }
+            )
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Response was not ok');
@@ -138,6 +144,7 @@ export function Chat() {
                 <div>
                     {handleWaitingRsponseIcon()}
                 </div>
+
                 <TextField
                     label="Please input your question"
                     sx={{ m: 1, width: '96%' }}

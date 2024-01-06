@@ -8,11 +8,16 @@
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss,md}'"
   },
   "dependencies": {
+    "@azure/msal-browser": "^3.6.0",
+    "@azure/msal-react": "^2.0.8",
     "@azure/openai": "^1.0.0-beta.7",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@fluentui/react": "^8.114.0",
+    "@fluentui/react-hooks": "^8.6.34",
     "@mui/icons-material": "^5.14.19",
     "@mui/material": "^5.14.19",
+    "jose": "^5.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-markdown": "^9.0.1",

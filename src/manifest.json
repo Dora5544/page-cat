@@ -7,8 +7,7 @@
     "service_worker": "background.bundle.js"
   },
   "action": {
-    "default_popup": "popup.html",
-    "default_icon": "icon-34.png"
+    "default_title": "Click to open sidebar"
   },
   "icons": {
     "128": "icon-128.png"
@@ -44,6 +43,11 @@
     "sidePanel",
     "tabs",
     "activeTab",
-    "webNavigation"
+    "webNavigation",
+    "identity"
+  ],
+  "host_permissions": [
+    "https://*/*",
+    "http://*/*"
   ]
 }

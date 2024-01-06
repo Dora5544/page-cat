@@ -6,7 +6,7 @@
     "typeRoots": [
       "node_modules/@types"
     ],
-    "target": "es5",
+    "target": "es2022",
     "lib": [
       "dom",
       "dom.iterable",
